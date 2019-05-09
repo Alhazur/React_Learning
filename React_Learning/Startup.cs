@@ -25,6 +25,18 @@ namespace React_Learning
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.WithOrigins("*")  // only for Dev!!! Not production code!!!
+                                            .AllowAnyHeader()
+                                            .AllowAnyMethod();
+                    });
+
+            });
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
@@ -42,6 +54,9 @@ namespace React_Learning
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCors();//glöm inte
+
             app.UseMvc();
         }
     }
